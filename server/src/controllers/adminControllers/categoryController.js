@@ -55,7 +55,6 @@ exports.getAllCategory = (req, res) => {
     delected: null,
     // title: { $regex: new RegExp(searchVal, "i") },
   };
-  console.log(query);
   Category.find(query)
     .sort({ [sortIndex]: -1 })
     .then((result) => {

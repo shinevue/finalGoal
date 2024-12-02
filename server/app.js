@@ -32,6 +32,11 @@ app.use(favicon(path.join(__dirname, "public", "favicon.ico")));
 // sets static folder
 app.use(express.static(path.join(__dirname, "public")));
 
+app.use('/uploads', (req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*'); // or specify your origin
+  next();
+}, express.static(path.join(__dirname, 'uploads')));
+
 // parse requests of content-type - application/json
 app.use(express.json());
 
