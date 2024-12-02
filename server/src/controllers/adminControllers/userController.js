@@ -3,8 +3,6 @@ const User = require("../../models/userModel");
 // make a controller for get all users
 exports.allUser = (req, res) => {
   const { sortIndex } = req.query;
-  console.log(sortIndex);
-  console.log("first");
   User.find({ delected: null })
     .populate([{ path: "followers.user" }, { path: "following.user" }])
     .sort({ [sortIndex]: 1 })
@@ -108,15 +106,14 @@ exports.changePassword = (req, res) => {
 exports.changeAvatar = (req, res) => {
   const id = req.params.id;
   const { avatar } = req.files;
-  console.log(id);
-  uploadPath = `public/../../client/public/assets/avatars/${id}.${avatar.name}`;
+  uploadPath = `./uploads/${id}.${avatar.name}`;
 
   avatar.mv(uploadPath, function (err) {
     if (err) return res.status(500).send(err);
 
     User.findById(id)
       .then((user) => {
-        user.avatar = `http://localhost:3001/assets/avatars/${id}.${avatar.name}`;
+        user.avatar = `${process.env.APP_BASE_URL}/uploads/${id}.${avatar.name}`;
         user
           .save()
           .then(() => {

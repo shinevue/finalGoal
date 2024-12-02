@@ -19,5 +19,6 @@ bin-release/
 
 # ignore node_modules
 /node_modules
+uploads
 
 # environment variables
